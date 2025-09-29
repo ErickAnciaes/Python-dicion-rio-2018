@@ -248,7 +248,10 @@ o nome-comum de um time, queremos saber sua id.
 Se o nome comum nao existir, retorne 'nao encontrado'
 '''
 def id_do_time(dados,nome_time):
-    id_time = dados["equipes"][""][nome_time]
+    for i in range(1,695):
+        id_time = dados["equipes"][i]["nome comum"]
+        
+        
 
 
 '''
@@ -261,7 +264,12 @@ dica: busque em dados['fases']
 
 '''
 def datas_de_jogo(dados):
-    pass
+    lista = []
+    for i in range():
+        datas = dados["fases"]["2700"]["jogos"]["data"]
+        lista.append(datas)
+        
+    
 
 '''
 Crie uma funcao data_de_um_jogo, que recebe a id numérica de um jogo
