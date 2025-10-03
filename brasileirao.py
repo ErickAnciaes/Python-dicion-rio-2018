@@ -281,7 +281,10 @@ vai falhar
 
 '''
 def data_de_um_jogo(dados,id_jogo):
-    pass
+    if id_jogo in dados["fases"]["2700"]["jogos"]["id"]:
+        return dados["fases"]["2700"]["jogos"]["id"]["data"]
+    else:
+        return "nao encontrado"
 
 
 '''
@@ -294,7 +297,15 @@ Ou seja, as chaves sao ids de estádios e os valores associados,
 o número de vezes que um jogo ocorreu no estádio
 '''
 def dicionario_id_estadio_e_nro_jogos(dados):
-    pass
+    dicionario_estadio = {}
+    for i in range(200):
+        estadio = dados["fases"]["2700"]["jogos"]["id"]["estadio"]
+        if estadio not in dicionario_estadio:
+            dicionario_estadio["estadio"] = 0
+        else:
+            dicionario_estadio["estadio"] += 1
+
+    return dicionario_estadio
 
 
 
