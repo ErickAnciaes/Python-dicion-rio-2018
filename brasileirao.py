@@ -248,8 +248,13 @@ o nome-comum de um time, queremos saber sua id.
 Se o nome comum nao existir, retorne 'nao encontrado'
 '''
 def id_do_time(dados,nome_time):
-    for i in range(1,695):
-        id_time = dados["equipes"][i]["nome comum"]
+    for id_time in dados["equipes"].keys():
+        if dados["equipes"][id_time]["nome-comum"] == nome_time:
+            return id_time
+    return "nao encontrado"
+    
+    
+
         
         
 
@@ -264,10 +269,8 @@ dica: busque em dados['fases']
 
 '''
 def datas_de_jogo(dados):
-    lista = []
-    for i in range():
-        datas = dados["fases"]["2700"]["jogos"]["data"]
-        lista.append(datas)
+    datas = dados["fases"]["2700"]["jogos"]["data"].keys()
+    return datas
         
     
 
@@ -282,9 +285,17 @@ vai falhar
 '''
 def data_de_um_jogo(dados,id_jogo):
     if id_jogo in dados["fases"]["2700"]["jogos"]["id"]:
-        return dados["fases"]["2700"]["jogos"]["id"]["data"]
+        return dados["fases"]["2700"]["jogos"]["id"][id_jogo]["data"]
     else:
         return "nao encontrado"
+    
+    # outra alternativa mais correta talvez
+    # try:
+       # resposta = dados["fases"]["2700"]["jogos"]["id"][id_jogo]["data"]
+       # return resposta
+   # except KeyError:
+       # return "nao encontrado"
+    
 
 
 '''
@@ -297,15 +308,15 @@ Ou seja, as chaves sao ids de estádios e os valores associados,
 o número de vezes que um jogo ocorreu no estádio
 '''
 def dicionario_id_estadio_e_nro_jogos(dados):
-    dicionario_estadio = {}
-    for i in range(200):
-        estadio = dados["fases"]["2700"]["jogos"]["id"]["estadio"]
-        if estadio not in dicionario_estadio:
-            dicionario_estadio["estadio"] = 0
+    resposta = {}
+    caminho = dados['fases']['2700']['jogos']['id']
+    for id_jogo in caminho.keys():
+        estadio = caminho[id_jogo]['estadio_id']
+        if estadio in resposta.keys():
+            resposta[estadio] = resposta[estadio]+1
         else:
-            dicionario_estadio["estadio"] += 1
-
-    return dicionario_estadio
+            resposta[estadio] = 1
+    return resposta
 
 
 
@@ -324,7 +335,12 @@ com a pesquisa (e pode ser vazia, se não achar ninguém)
 '''
 
 def busca_imprecisa_por_nome_de_time(dados,nome_time):
-    pass
+    times = []
+    nome_time = nome_time.lower()
+    for id_time in dados["equipes"].keys():
+        if (nome_time in dados["equipes"][id_time]["nome-comum"].lower()  or nome_time in dados["equipes"][id_time]["nome-slug"].lower() or nome_time in dados["equipes"][id_time]["sigla"].lower()  or nome_time in dados["equipes"][id_time]["nome"].lower() ):
+            times.append(id_time)
+    return times
 
 #ids dos jogos de um time
 
